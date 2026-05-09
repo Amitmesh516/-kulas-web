@@ -296,16 +296,73 @@
   .footer-copy { color: rgba(255,255,255,0.22); font-size: 0.78rem; }
 
   @media (max-width: 640px) {
-    nav { padding: 0 1.2rem; }
-    .hero { padding: 0 1.2rem 2.5rem; }
-    .hero-box { padding: 2rem; }
-    .section-black { padding: 4rem 1.5rem; }
-    .steps { flex-direction: column; }
-    .step { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
-    .cta-box { padding: 2.5rem 2rem; }
-    footer { flex-direction: column; text-align: center; }
-    .logo-break-box { max-width: 100%; }
-    .logo-break-overlay { left: 1.2rem; right: 1.2rem; }
+    /* NAV */
+    nav { padding: 0 1.25rem; height: 56px; }
+    .logo { font-size: 1.3rem; }
+
+    /* HERO — give top breathing room, full-width box */
+    .hero {
+      min-height: 100svh;
+      align-items: flex-end;
+      padding: 0 1.25rem 2.5rem;
+    }
+    .hero-box {
+      padding: 1.75rem 1.5rem;
+      max-width: 100%;
+      width: 100%;
+    }
+    .hero-box h1 { font-size: 2.2rem; }
+    .hero-buttons { flex-direction: column; gap: 0.6rem; }
+    .hero-buttons a { text-align: center; padding: 0.9rem 1.5rem; }
+
+    /* FEATURES */
+    .section-black { padding: 3.5rem 1.25rem; }
+    .features-grid { grid-template-columns: 1fr; }
+    .feature-card { padding: 1.75rem 1.5rem; }
+
+    /* HOW IT WORKS logo break */
+    .logo-break { height: 40vh; }
+    .logo-break-overlay { left: 1.25rem; right: 1.25rem; }
+    .logo-break-box { padding: 1.75rem 1.5rem; max-width: 100%; }
+
+    /* STEPS — stack vertically */
+    .steps { flex-direction: column; gap: 0; }
+    .step {
+      border-right: none;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 1.75rem 1.25rem;
+    }
+    .step:last-child { border-bottom: none; }
+    .step-num { font-size: 2.2rem; }
+
+    /* PRICING */
+    .price-card { padding: 2rem 1.5rem; }
+    .price-amount { font-size: 3.5rem; }
+
+    /* CTA */
+    .cta-section { height: auto; padding: 5rem 1.25rem; }
+    .cta-box { padding: 2.25rem 1.75rem; max-width: 100%; }
+    .cta-box h2 { font-size: 2rem; }
+
+    /* FOOTER */
+    footer {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 1.5rem 1.25rem;
+      gap: 0.75rem;
+    }
+    .footer-links { gap: 1.25rem; }
+  }
+
+  /* Tablet tweaks (641px–900px) */
+  @media (min-width: 641px) and (max-width: 900px) {
+    nav { padding: 0 2rem; }
+    .hero { padding: 0 2rem 3rem; }
+    .section-black { padding: 4rem 2rem; }
+    .cta-box { padding: 3rem 3rem; }
+    footer { padding: 1.5rem 2rem; }
+    .logo-break-overlay { left: 2rem; }
   }
 </style>
 </head>
