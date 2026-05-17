@@ -26,7 +26,7 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-attachment: fixed;
+    /* removed background-attachment: fixed — broken on iOS Safari */
   }
 
   /* Everything sits on top */
@@ -296,6 +296,12 @@
   .footer-copy { color: rgba(255,255,255,0.22); font-size: 0.78rem; }
 
   @media (max-width: 640px) {
+    /* Mobile: show full logo instead of zoomed crop */
+    .bg-logo {
+      background-size: contain;
+      background-position: center top;
+    }
+
     /* NAV */
     nav { padding: 0 1.25rem; height: 56px; }
     .logo { font-size: 1.3rem; }
