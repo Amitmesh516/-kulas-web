@@ -1,0 +1,13 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["F8H65U988T.com.amit.kulas"],
+        "components": [
+          { "/": "/join.html", "comment": "Matches /join.html with any query string, e.g. ?code=ABC123" },
+          { "/": "/join", "comment": "Also matches without the .html extension" }
+        ]
+      }
+    ]
+  }
+}
