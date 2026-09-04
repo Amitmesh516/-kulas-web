@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Join a trip on Kulas</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #ffffff;
+    --fg: #111111;
+    --muted: #6b6b70;
+    --card: #f4f4f6;
+    --accent: #ff5a5f;
+    --border: #e5e5ea;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0d0d0f;
+      --fg: #ffffff;
+      --muted: #9a9aa2;
+      --card: #1c1c1e;
+      --border: #2c2c2e;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .card {
+    width: 100%;
+    max-width: 380px;
+    text-align: center;
+  }
+  h1 {
+    font-size: 22px;
+    margin: 0 0 6px;
+  }
+  p.tagline {
+    color: var(--muted);
+    margin: 0 0 28px;
+    font-size: 15px;
+  }
+  .code-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+  .code-label {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+  .code {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    font-variant-numeric: tabular-nums;
+  }
+  .copy-btn {
+    margin-top: 12px;
+    background: none;
+    border: none;
+    color: var(--accent);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .btn {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    margin-bottom: 12px;
+    border: none;
+    cursor: pointer;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+  }
+  .btn-secondary {
+    background: var(--card);
+    color: var(--fg);
+    border: 1px solid var(--border);
+  }
+  .hint {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 20px;
+    line-height: 1.5;
+  }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>Join a trip on Kulas</h1>
+    <p class="tagline">Travel together, effortlessly.</p>
+
+    <div id="codeBox" class="code-box hidden">
+      <div class="code-label">Your trip code</div>
+      <div class="code" id="codeValue"></div>
+      <button class="copy-btn" id="copyBtn" type="button">Copy code</button>
+    </div>
+
+    <a class="btn btn-primary" id="openAppBtn" href="#">Open in Kulas</a>
+    <a class="btn btn-secondary" href="https://apps.apple.com/app/id6763915895">Get Kulas on the App Store</a>
+
+    <p class="hint" id="hint">
+      Don't have Kulas yet? Download it, open <strong>Join a Trip</strong>,
+      and enter the code above.
+    </p>
+  </div>
+
+  <script>
+    var params = new URLSearchParams(window.location.search);
+    var code = (params.get('code') || '').trim().toUpperCase();
+
+    if (code) {
+      var appStoreUrl = 'https://apps.apple.com/app/id6763915895';
+      var schemeUrl = 'kulas://join?code=' + encodeURIComponent(code);
+
+      document.getElementById('codeValue').textContent = code;
+      document.getElementById('codeBox').classList.remove('hidden');
+      document.getElementById('openAppBtn').href = schemeUrl;
+
+      document.getElementById('copyBtn').addEventListener('click', function () {
+        navigator.clipboard.writeText(code).then(function () {
+          var btn = document.getElementById('copyBtn');
+          var original = btn.textContent;
+          btn.textContent = 'Copied!';
+          setTimeout(function () { btn.textContent = original; }, 1500);
+        });
+      });
+
+      // Reaching this page at all means the universal link didn't open the
+      // app directly (app not installed, or an in-app browser that doesn't
+      // honor universal links). Try the custom scheme once — if that also
+      // does nothing, the app genuinely isn't installed, so send them to the
+      // App Store automatically instead of making them tap a button.
+      var leftPage = false;
+      document.addEventListener('visibilitychange', function () {
+        if (document.hidden) leftPage = true;
+      });
+      window.addEventListener('pagehide', function () { leftPage = true; });
+
+      document.getElementById('hint').textContent = 'Opening Kulas…';
+      window.location.href = schemeUrl;
+
+      setTimeout(function () {
+        if (leftPage) return; // the app opened — nothing left to do here
+        document.getElementById('hint').textContent =
+          "Don't have Kulas yet? Redirecting you to the App Store…";
+        window.location.href = appStoreUrl;
+      }, 1200);
+    } else {
+      document.getElementById('openAppBtn').classList.add('hidden');
+      document.getElementById('hint').textContent =
+        "This link is missing a trip code — ask whoever invited you to resend it.";
+    }
+  </script>
+</body>
+</html>
